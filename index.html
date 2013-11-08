@@ -3,12 +3,18 @@
 <head>
 	<meta charset="utf-8">
 	<title>Synth Pad Web Audio Demo</title>
+	<!-- Google Fonts -->
 	<link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+	<!-- Styles -->
 	<link rel="stylesheet" href="style.css">
+	<!-- Javascript -->
+	<script type="text/javascript" src="js/jquery_min.js"></script>
+	<script type="text/javascript" src="js/knob/js/knob.js"></script>
+
 </head>
 <body>
 	<div id="page-wrapper" class="clearfix">
-		
+
 		<div id="info">
 			<h1>Web Audio Synth Pad</h1>
 			<p>
@@ -22,6 +28,11 @@
 				<div id="frequency">n/a</div>
 				<div id="volume">n/a</div>
 			</div>
+			<label>Controls</label><hr><br>
+			<div id="controls">
+				<input type="text" value="20" class="dial" data-width="100" data-skin="tron" data-fgColor="#66CC66" data-angleOffset=-125 data-angleArc=250>
+			</div>
+			
 		</div>
 		<canvas id="synth-pad"></canvas>
 	</div>

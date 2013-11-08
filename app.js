@@ -122,6 +122,15 @@ var SynthPad = function() {
 return SynthPad;
 
 })();
+// Control section
+$(function() {
+    $(".dial").knob(
+	{
+	         		'change':function(e){
+	                        console.log(e);
+	                }
+	            })
+});
 
 // Initialize the page.
 window.onload = function() {
