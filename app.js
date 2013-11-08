@@ -24,6 +24,7 @@ var SynthPad = function() {
 		myCanvas = document.getElementById('synth-pad');
 		frequencyLabel = document.getElementById('frequency');
 		volumeLabel = document.getElementById('volume');
+		knob = document.getElementById('knob');
 
 		// Create an audio context - container for all web audio sources in app - analagous to a patch  
 		myAudioContext = new webkitAudioContext();
@@ -90,31 +91,43 @@ var SynthPad = function() {
 	};
 
 	// Calculate the volume
-	SynthPad.calculateVolume = function(posY) {
-		var volumeLevel = 1 - (((100 / myCanvas.offsetHeight) * (posY - myCanvas.offsetTop)) / 100);
-		return volumeLevel;
+	//SynthPad.calculateVolume = function(posY) {
+	//	var volumeLevel = 1 - (((100 / myCanvas.offsetHeight) * (posY - myCanvas.offsetTop)) / 100);
+	//	return volumeLevel;
+	//};
+
+	// Set the volume fro UI knob
+	SynthPad.calculateVolume = function(e) {
+		var volumeLevel = e;
+		console.log("synth calculate Vol " + e);
+		var gOut = gainNode.gain.value = Math.floor(volumeLevel);
+		console.log("gain = " + gOut);
+	
+		volumeLabel.innerHTML = volumeLevel + '%';
+		knob.value = volumeLevel;
+		//return volumeLevel;
 	};
 
 	// Fetch the new frequency and volume
-	SynthPad.calculateFrequency = function(x, y) {
+	SynthPad.calculateFrequency = function(x) {
 		var noteValue = SynthPad.calculateNote(x);
-		var volumeValue = SynthPad.calculateVolume(y);
+		//var volumeValue = SynthPad.calculateVolume(y);
 
 		oscillator.frequency.value = noteValue;
-		gainNode.gain.value = volumeValue;
+		
 
 		frequencyLabel.innerHTML = Math.floor(noteValue) + ' Hz';
-		volumeLabel.innerHTML = Math.floor(volumeValue * 100) + '%';
+	
 	};
 
 	// Update the note frequency
 	SynthPad.updateFrequency = function(event) {
 		if (event.type == 'mousedown' || event.type == 'mousemove') {
-		SynthPad.calculateFrequency(event.x, event.y);
+		SynthPad.calculateFrequency(event.x);
 		} else if (event.type == 'touchstart' || event.type == 'touchmove') {
 			var touch = event.touches[0];
 
-			SynthPad.calculateFrequency(touch.pageX, touch.pageY);
+			SynthPad.calculateFrequency(touch.pageX);
 		}
 	};
 
@@ -128,6 +141,8 @@ $(function() {
 	{
 	         		'change':function(e){
 	                        console.log(e);
+	                        SynthPad.calculateVolume(e);
+
 	                }
 	            })
 });
