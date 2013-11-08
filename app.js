@@ -35,7 +35,7 @@ var SynthPad = function() {
 	// Event Listeners
 	SynthPad.setupEventListeners = function() {
 
-		// Disables scrolling on touch devices.
+		// Disables scrolling on touch devices
 		document.body.addEventListener('touchmove', function(event) {
 		event.preventDefault();
 		}, false);
@@ -94,8 +94,8 @@ var SynthPad = function() {
 		var volumeLevel = 1 - (((100 / myCanvas.offsetHeight) * (posY - myCanvas.offsetTop)) / 100);
 		return volumeLevel;
 	};
-	
-	// Fetch the new frequency and volume.
+
+	// Fetch the new frequency and volume
 	SynthPad.calculateFrequency = function(x, y) {
 		var noteValue = SynthPad.calculateNote(x);
 		var volumeValue = SynthPad.calculateVolume(y);
@@ -107,7 +107,7 @@ var SynthPad = function() {
 		volumeLabel.innerHTML = Math.floor(volumeValue * 100) + '%';
 	};
 
-	// Update the note frequency.
+	// Update the note frequency
 	SynthPad.updateFrequency = function(event) {
 		if (event.type == 'mousedown' || event.type == 'mousemove') {
 		SynthPad.calculateFrequency(event.x, event.y);
