@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Synth Pad Web Audio Demo</title>
+	<link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<div id="page-wrapper" class="clearfix">
+		
+		<div id="info">
+			<h1>Web Audio Synth Pad</h1>
+			<p>
+				Click and drag the mouse over the synthesiser pad to generate a sound.
+			</p>
+			<div id="labels" class="clearfix">
+				<div id="label">Frequency:</div>
+				<div id="label">Volume:</div>
+			</div>
+			<div id="values" class="clearfix">
+				<div id="frequency">n/a</div>
+				<div id="volume">n/a</div>
+			</div>
+		</div>
+		<canvas id="synth-pad"></canvas>
+	</div>
+	<script src="app.js"></script>
+</body>
+</html>
