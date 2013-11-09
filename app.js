@@ -24,7 +24,7 @@ var SynthPad = function() {
 		myCanvas = document.getElementById('synth-pad');
 		frequencyLabel = document.getElementById('frequency');
 		volumeLabel = document.getElementById('volume');
-		knob = document.getElementById('knob');
+		volKnob = document.getElementById('volKnob');
 
 		// Create an audio context - container for all web audio sources in app - analagous to a patch  
 		myAudioContext = new webkitAudioContext();
