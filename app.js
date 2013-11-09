@@ -28,9 +28,18 @@ var SynthPad = function() {
 
 		// Create an audio context - container for all web audio sources in app - analagous to a patch  
 		myAudioContext = new webkitAudioContext();
-
+		// Prep the canvas with listeners
 		SynthPad.setupEventListeners();
-
+		// Create a volume control on the Audio Context
+		gainNode = myAudioContext.createGainNode();
+		// Set up default volume for synth on load - not too loud
+		var defaultVolume = 5;
+		// Assign volume sent from knob to newly created gain node
+		gainNode.gain.value = defaultVolume;
+		// Connet the volume control to the output / amplifier
+		gainNode.connect(myAudioContext.destination);
+		// Display default volume value in the UI 
+		volumeLabel.innerHTML = defaultVolume;
 	};
 
 	// Event Listeners
@@ -54,11 +63,9 @@ var SynthPad = function() {
 	SynthPad.playSound = function(event) {
 		// Create an oscillator on the Audio Context
 		oscillator = myAudioContext.createOscillator();
-		
-		// Set waveshape of oscillator
+		// Set waveshape of oscillator - Sine is nice to get started
 		oscillator.type = 'sine';
-		
-		// Connecet the oscillator to the volumne control 
+		// Connecet the oscillator to the gain 
 		oscillator.connect(gainNode);
 		// Mouse / touch events are passed to update frequency
 		SynthPad.updateFrequency(event);
@@ -70,24 +77,21 @@ var SynthPad = function() {
 		// Stop sound when mouse leaves canvas
 		myCanvas.addEventListener('mouseout', SynthPad.stopSound);
 	};
-	// Set the volume fro UI knob
+
+	// Called from UI volume knob - overrides defualt volume
 	SynthPad.calculateVolume = function(e) {
 		var volumeLevel = e;
 		// Debugging volume knob
 		//console.log("synth Volume " + e);
-
-		// Create a volume control on the Audio Context
-		gainNode = myAudioContext.createGainNode();
-
 		// Assign volume sent from knob to newly created gain node
 		gainNode.gain.value = volumeLevel;
 		// Connet the volume control to the output / amplifier
 		gainNode.connect(myAudioContext.destination);
-		
 		// Updating volume values in UI elements
 		volumeLabel.innerHTML = volumeLevel;
 		
 	};
+
 	// Stop the audio
 	SynthPad.stopSound = function(event) {
 		// Stop oscillator immediately	
@@ -135,19 +139,20 @@ var SynthPad = function() {
 return SynthPad;
 
 })();
-// Control section
+
+// Controls section - jQuery Knob library
 $(function() {
     $(".dial").knob(
 	{
-	         		'change':function(e){
-	                        console.log(e);
-	                        SynthPad.calculateVolume(e);
+         	'change':function(e){
+            	console.log(e);
+            	SynthPad.calculateVolume(e);
 
-	                }
-	            })
+            }
+	})
 });
 
-// Initialize the page.
+// Initialize the page - call synthpad constructor
 window.onload = function() {
 var synthPad = new SynthPad();
 }
