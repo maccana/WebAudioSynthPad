@@ -86,8 +86,7 @@ var SynthPad = function() {
 		
 		// Updating volume values in UI elements
 		volumeLabel.innerHTML = volumeLevel;
-		knob.value = volumeLevel;
-		//return volumeLevel;
+		
 	};
 	// Stop the audio
 	SynthPad.stopSound = function(event) {

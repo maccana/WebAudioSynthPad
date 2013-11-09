@@ -97,6 +97,28 @@ body {
   	-webkit-user-select: none;
   	-ms-user-select: none;
 }
+#volLabel{
+	margin-top:-100px;
+	margin-left: 24px;
+}
+#knob-container {
+	width:auto;
+	border: 0px solid red;
+	margin-left: 100px;
+	height:120px;
+	margin-left: -100px;
+}
+#knob {
+	border: 0px solid red;
+	margin-top: 0px;
+	width:22%;
+	height: 88px;
+}
+#controls {
+	margin:auto;
+	margin-left: 100px;
+	height:200px;
+}
 
 h1 {
 	font-weight: normal;
