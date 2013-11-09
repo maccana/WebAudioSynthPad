@@ -54,12 +54,10 @@ var SynthPad = function() {
 	SynthPad.playSound = function(event) {
 		// Create an oscillator on the Audio Context
 		oscillator = myAudioContext.createOscillator();
-		// Create a volume control on the Audio Context
-		gainNode = myAudioContext.createGainNode();
+		
 		// Set waveshape of oscillator
 		oscillator.type = 'sine';
-		// Connet the volume control to the output / amplifier
-		gainNode.connect(myAudioContext.destination);
+		
 		// Connecet the oscillator to the volumne control 
 		oscillator.connect(gainNode);
 		// Mouse / touch events are passed to update frequency
@@ -72,7 +70,25 @@ var SynthPad = function() {
 		// Stop sound when mouse leaves canvas
 		myCanvas.addEventListener('mouseout', SynthPad.stopSound);
 	};
+	// Set the volume fro UI knob
+	SynthPad.calculateVolume = function(e) {
+		var volumeLevel = e;
+		// Debugging volume knob
+		//console.log("synth Volume " + e);
 
+		// Create a volume control on the Audio Context
+		gainNode = myAudioContext.createGainNode();
+
+		// Assign volume sent from knob to newly created gain node
+		gainNode.gain.value = volumeLevel;
+		// Connet the volume control to the output / amplifier
+		gainNode.connect(myAudioContext.destination);
+		
+		// Updating volume values in UI elements
+		volumeLabel.innerHTML = volumeLevel;
+		knob.value = volumeLevel;
+		//return volumeLevel;
+	};
 	// Stop the audio
 	SynthPad.stopSound = function(event) {
 		// Stop oscillator immediately	
@@ -96,26 +112,11 @@ var SynthPad = function() {
 	//	return volumeLevel;
 	//};
 
-	// Set the volume fro UI knob
-	SynthPad.calculateVolume = function(e) {
-		var volumeLevel = e;
-		console.log("synth calculate Vol " + e);
-		var gOut = gainNode.gain.value = Math.floor(volumeLevel);
-		console.log("gain = " + gOut);
-	
-		volumeLabel.innerHTML = volumeLevel + '%';
-		knob.value = volumeLevel;
-		//return volumeLevel;
-	};
-
 	// Fetch the new frequency and volume
 	SynthPad.calculateFrequency = function(x) {
 		var noteValue = SynthPad.calculateNote(x);
 		//var volumeValue = SynthPad.calculateVolume(y);
-
 		oscillator.frequency.value = noteValue;
-		
-
 		frequencyLabel.innerHTML = Math.floor(noteValue) + ' Hz';
 	
 	};
